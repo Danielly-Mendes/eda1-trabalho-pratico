@@ -6,37 +6,56 @@
 
 
 void cadastrarProduto(Produtos** lista){
-Produtos* novo = (Produtos*)malloc(sizeof(Produtos));
-printf("/|----------- NOVO PRODUTO -----------|\\n");
-printf("codigo: ");
-scanf("%d", &novo->codigo);
-if(buscarProduto(*lista, novo->codigo) != NULL) {
-        printf("|>> Erro: Código já existe!<<|\n");
-        free(novo);
-        return;
 
-}
-else {printf("Nome: ");
+Produtos* novo = (Produtos*)malloc(sizeof(Produtos));
+
+
+printf("/|----------- NOVO PRODUTO -----------|\\n");
+printf("Codigo: ");
+
+scanf("%d", &novo->codigo);
+printf("Nome: ");
+
 scanf("%s", novo->nome);
 printf("Preco: ");
 scanf("%f", &novo->preco);
+
 printf("Quantidade: ");
 scanf("%d", &novo->qtde);
+
 novo->proximo = *lista;
 *lista = novo;
-printf("||>>Produto cadastrado com sucesso!<<||\n");
+
+if(*lista == NULL){
+    *lista  = novo;
 }
+else{
+
+    Produtos* atual = *lista;
+    while(atual->proximo != NULL){
+        atual = atual->proximo;
+    }
+    atual->proximo = novo;
 }
+printf("||>> Produto cadastrado com sucesso! <<||\n");
+}
+
+
 
 void listarProdutos(Produtos* lista){
 Produtos* atual = lista;
 printf("|----------- LISTA DE PRODUTOS -----------|\n");
 while(atual != NULL ){
+if(atual == NULL){
+    printf("Nenhum produto cadastrado!\n");
+    return;
+}
 printf("Codigo: %d\n", atual->codigo);
 printf("Nome: %s\n", atual->nome);
-printf("Preco: %d\n", atual->preco);
+printf("Preco: %.2f\n", atual->preco);
 printf("Quantidade: %d\n", atual->qtde);
 printf("|-------------------------------|\n");
+
 atual = atual->proximo;
 }
 }
@@ -44,16 +63,17 @@ atual = atual->proximo;
 Produtos* buscarProduto(Produtos* lista, int codigo){
     
 Produtos* atual = lista;
+
 while(atual != NULL){  
-if(atual->codigo == codigo){
-return atual;
+
+    if(atual->codigo == codigo){
+    return atual;
 }
 atual = atual->proximo;
-
 }
-printf("|>> Erro: Produto não encontrado!<<|\n");
-    free(atual);
-    return NULL;
+printf("Produto nao encontrado!\n");
+
+return NULL;
 }
 
 
@@ -61,26 +81,44 @@ void editarProduto(Produtos* lista, int codigo){
     while(lista != NULL ){
         
         if(lista->codigo == codigo){
-         printf("Novo nome: ");
-         scanf("%s", lista->nome);
-         printf("Novo preco: ");
-         scanf("%f", &lista->preco);
+         
+        printf("Novo nome: ");
+        scanf("%[^\n]", lista->nome);
+        
+        printf("Novo preco: ");
+        scanf("%f", &lista->preco);
+    
         printf("Nova quantidade: ");
         scanf("%d", &lista->qtde);
+        
         printf("||>> Produto editado com sucesso!<<||\n");
-       
+
         return;
-    }
+        }
+    
+
     lista = lista->proximo;
 }
-
+printf("Produto nao encontrado!\n");
 
 }
 
-void removerProduto(Produtos** lista){
-    int codigo;
-    Produtos* lixo = *lista;
-    *lista = (*lista)->proximo;
+void removerProduto(Produtos** lista,int codigo){
+   Produtos* lixo = buscarProduto(*lista, codigo);
+    if(lixo == NULL){
+        printf("Produto nao encontrado!\n");
+        return;
+    }
+    Produtos* atual = *lista;
+    if(atual == lixo){
+        *lista = (*lista)->proximo;
+        free(lixo);
+        return;
+    }
+    while(atual->proximo != lixo){
+        atual = atual->proximo;
+    }
+    atual->proximo = lixo->proximo;
     free(lixo);
 
 }
@@ -89,11 +127,13 @@ void removerProduto(Produtos** lista){
 void liberarProdutos(Produtos** lista){
     Produtos* atual = *lista;
     Produtos* proximo;
+
     while(atual != NULL){
         proximo = atual->proximo;
         free(atual);
         atual = proximo;
     }
+    
     *lista = NULL;
 }
 

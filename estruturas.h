@@ -12,6 +12,7 @@ typedef struct _Clientes {
     char email[101];
     struct _Clientes* proximo;
     ItemCarrinho* carrinho;
+    int id;
 
 } Clientes;
 
@@ -20,6 +21,7 @@ typedef struct _Produtos {
     float preco;
     char nome[101];
     struct _Produtos* proximo;
+    int id;
 } Produtos;
 
 typedef struct _ItemCarrinho{
@@ -27,6 +29,7 @@ typedef struct _ItemCarrinho{
     float preco;
     char nome[101];
     struct _ItemCarrinho* proximo;
+    int id ;
 } ItemCarrinho;
 
 
