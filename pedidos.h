@@ -10,7 +10,7 @@ void listarProdutos(Produtos* lista);
 
 Produtos* buscarProduto(Produtos* lista, int codigo);
 
-void editarProduto(Produtos* lista);
+void editarProduto(Produtos* lista, int codigo);
 
 void removerProduto(Produtos** lista);
 

@@ -11,22 +11,32 @@ printf("/|----------- NOVO PRODUTO -----------|\\n");
 printf("codigo: ");
 scanf("%d", &novo->codigo);
 if(buscarProduto(*lista, novo->codigo) != NULL) {
-        printf(">> Erro: Código já existe!\n");
+        printf("|>> Erro: Código já existe!<<|\n");
         free(novo);
         return;
 
+}
+else {printf("Nome: ");
+scanf("%s", novo->nome);
+printf("Preco: ");
+scanf("%f", &novo->preco);
+printf("Quantidade: ");
+scanf("%d", &novo->qtde);
+novo->proximo = *lista;
+*lista = novo;
+printf("||>>Produto cadastrado com sucesso!<<||\n");
 }
 }
 
 void listarProdutos(Produtos* lista){
 Produtos* atual = lista;
-printf("----------- LISTA DE PRODUTOS -----------\n");
-while(atual != NULL){
+printf("|----------- LISTA DE PRODUTOS -----------|\n");
+while(atual != NULL ){
 printf("Codigo: %d\n", atual->codigo);
 printf("Nome: %s\n", atual->nome);
 printf("Preco: %d\n", atual->preco);
 printf("Quantidade: %d\n", atual->qtde);
-printf("-------------------------------\n");
+printf("|-------------------------------|\n");
 atual = atual->proximo;
 }
 }
@@ -40,35 +50,35 @@ return atual;
 }
 atual = atual->proximo;
 
-else {
-    printf(">> Erro: Produto não encontrado!\n");
-    free(novo);
+}
+printf("|>> Erro: Produto não encontrado!<<|\n");
+    free(atual);
     return NULL;
 }
-}
-}
 
-void editarProduto(Produtos* lista){
-while(lista != NULL){
-    if(lista->codigo == codigo){
-        printf("Novo nome: ");
-        scanf("%s", lista->nome);
-        printf("Novo preco: ");
-        scanf("%d", &lista->preco);
+
+void editarProduto(Produtos* lista, int codigo){
+    while(lista != NULL ){
+        
+        if(lista->codigo == codigo){
+         printf("Novo nome: ");
+         scanf("%s", lista->nome);
+         printf("Novo preco: ");
+         scanf("%f", &lista->preco);
         printf("Nova quantidade: ");
         scanf("%d", &lista->qtde);
-        printf(">> Produto editado com sucesso!\n");
+        printf("||>> Produto editado com sucesso!<<||\n");
+       
         return;
     }
     lista = lista->proximo;
 }
 
 
-
-
 }
 
 void removerProduto(Produtos** lista){
+    int codigo;
     Produtos* lixo = *lista;
     *lista = (*lista)->proximo;
     free(lixo);
