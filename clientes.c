@@ -6,7 +6,8 @@
 Clientes * CriarListaCliente(){
     Clientes * cabeca;
     cabeca = malloc(sizeof(Clientes));
-    cabeca->proximo;
+
+    if (cabeca != NULL) cabeca->proximo = NULL;
     return cabeca;
 }
 
@@ -17,22 +18,26 @@ void cadastrarCliente(Clientes *lista){
     printf("-----------------NOVO CLIENTE---------------\n");
 
     printf("Nome: ");
-    scanf("%s", cliente->nome);
+    scanf(" %[^\n]", cliente->nome);
 
-    printf("CPF [XXX.XXX.XXX-XX]: ");
-    scanf("%s", cliente->CPF);
+    printf("\nCPF [XXX.XXX.XXX-XX]: ");
+    scanf(" %[^\n]", cliente->CPF);
 
-    printf("Data de nascimento [dd/mm/aa]: ");
-    scanf("%s", cliente->dt_nascimento);
+    printf("\nData de nascimento [dd/mm/aa]: ");
+    scanf(" %[^\n]", cliente->dt_nascimento);
 
-    printf("Telefone [(xx) y yyyy-yyyy]: ");
-    scanf("%s", cliente->telefone);
+    printf("\nTelefone [(xx) y yyyy-yyyy]: ");
+    scanf(" %[^\n]", cliente->telefone);
 
     cliente->carrinho = NULL;
     cliente->proximo = NULL;
 
-    lista->proximo = cliente;
-    lista = cliente;
+    Clientes *p = lista;
+    while (p->proximo != NULL) {
+        p = p->proximo;
+    }
+
+    p->proximo = cliente;
 }
 
 void listarClientes(Clientes *cabeca){
@@ -42,15 +47,15 @@ void listarClientes(Clientes *cabeca){
 }
 
 Clientes * BuscarCliente(char busca[15], Clientes *le){
-    Clientes *p, *q;
-    p = le;
-    q = le->proximo;
+    Clientes *p;
+    p = le->proximo;
 
-    while (q != NULL && strcmp(busca, q->CPF) != 0){
-        p = q;
-        q = q->proximo;
-    }
-    if (strcmp(busca, p->CPF) == 0) return p;
+    while (p != NULL){
+        if (strcmp(busca, p->CPF) == 0) return p;
+        p = p->proximo;        
+    }   
+
+    return NULL;
 }
 
 
