@@ -42,14 +42,19 @@ int main(){
                             break;
                         case 3:
                             {
-                            int codigo;
-                            printf("Digite o codigo do cliente a ser editado: ");
-                            scanf("%d", &codigo);
-                            //editarCliente(listaClientes, codigo);
-                            }
+                            char busca[15];
+                            printf("Digite o cpf: ");
+                            scanf(" %[^\n]", busca);
+                            Clientes * temp = BuscarCliente(busca, listaClientes);
+                            editarCliente(temp);
                             break;
+                            }
                         case 4:
-                            //removerCliente(&listaClientes);
+                            char busca[15];
+                            printf("Digite o cpf: ");
+                            scanf(" %[^\n]", busca);
+                            Clientes * temp = BuscarCliente(busca, listaClientes);
+                            removerCliente(listaClientes, temp);
                             break;
                         default:
                             break;
@@ -129,7 +134,7 @@ int main(){
             default:
                 printf("Opção inválida! Tente novamente.\n");
                 break;
-        }
+            }
     }
     return 0;
 }
