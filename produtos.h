@@ -4,6 +4,8 @@
 
 #include "estruturas.h" 
 
+Produtos* CriarListaProduto(Clientes* listaClientes);
+
 void cadastrarProduto(Produtos** lista);
 
 void listarProdutos(Produtos* lista);
@@ -12,7 +14,7 @@ Produtos* buscarProduto(Produtos* lista, int codigo);
 
 void editarProduto(Produtos* lista, int codigo);
 
-void removerProduto(Produtos** lista);
+void removerProduto(Produtos* lista, int codigo);
 
 void liberarProdutos(Produtos** lista);
 

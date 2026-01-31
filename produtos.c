@@ -1,42 +1,48 @@
 
 #include "estruturas.h" 
-#include "pedidos.h"
+#include "produtos.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 
+Produtos* CriarListaProdut(Produtos* lista){
+   
+    Produtos * cabeça = (Produtos*) malloc (sizeof(Produtos));
+   
+    if(cabeça != NULL){
+        cabeça->proximo = NULL;
+    
+    }
+return ;
+}
+
+
 void cadastrarProduto(Produtos** lista){
 
-Produtos* novo = (Produtos*)malloc(sizeof(Produtos));
-
-
+Produtos* novo = (Produtos*) malloc (sizeof(Produtos));
 printf("/|----------- NOVO PRODUTO -----------|\\n");
 printf("Codigo: ");
 
 scanf("%d", &novo->codigo);
 printf("Nome: ");
 
-scanf("%s", novo->nome);
+if(buscarProduto(lista, novo->codigo) != NULL)
+{
+    printf("Codigo ja cadastrado!\n");
+    free(novo);
+    return;
+}
+
+scanf("%[^\n]", novo->nome);
 printf("Preco: ");
 scanf("%f", &novo->preco);
 
 printf("Quantidade: ");
 scanf("%d", &novo->qtde);
 
-novo->proximo = *lista;
+novo->proximo = lista;
 *lista = novo;
 
-if(*lista == NULL){
-    *lista  = novo;
-}
-else{
-
-    Produtos* atual = *lista;
-    while(atual->proximo != NULL){
-        atual = atual->proximo;
-    }
-    atual->proximo = novo;
-}
 printf("||>> Produto cadastrado com sucesso! <<||\n");
 }
 
@@ -45,11 +51,12 @@ printf("||>> Produto cadastrado com sucesso! <<||\n");
 void listarProdutos(Produtos* lista){
 Produtos* atual = lista;
 printf("|----------- LISTA DE PRODUTOS -----------|\n");
-while(atual != NULL ){
 if(atual == NULL){
     printf("Nenhum produto cadastrado!\n");
     return;
 }
+while(atual != NULL ){
+
 printf("Codigo: %d\n", atual->codigo);
 printf("Nome: %s\n", atual->nome);
 printf("Preco: %.2f\n", atual->preco);
@@ -110,14 +117,16 @@ void removerProduto(Produtos** lista,int codigo){
         return;
     }
     Produtos* atual = *lista;
+
     if(atual == lixo){
         *lista = (*lista)->proximo;
         free(lixo);
         return;
     }
-    while(atual->proximo != lixo){
-        atual = atual->proximo;
+        while(atual->proximo != lixo){
+            atual = atual->proximo;
     }
+    
     atual->proximo = lixo->proximo;
     free(lixo);
 

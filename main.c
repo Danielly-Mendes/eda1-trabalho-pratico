@@ -1,8 +1,8 @@
 #include "estruturas.h" 
-#include "pedidos.h"
+#include "produtos.h"
 #include "clientes.h"
 //#include "pedidos.c"
-#include "clientes.c"
+//#include "clientes.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,7 +10,10 @@
 int main(){
     int i = 0;
     //Produtos* listaProdutos = NULL;
+    //Clientes* listaClientes = NULL;
+    
     Clientes * listaClientes = CriarListaCliente();
+    Produtos * listaProdutos = CriarListaProduto(listaClientes);
 
     while(i != 4){
         printf("|>>------------MENU-------------<<|\n");
@@ -51,7 +54,11 @@ int main(){
                         case 4:
                             //removerCliente(&listaClientes);
                             break;
-                        default:
+                        case 5:
+                            printf("Voltando ao menu anterior...\n");
+                            break;
+                            default:
+                            printf("Opção inválida! Tente novamente.\n");
                             break;
                     }
                 }
@@ -70,23 +77,32 @@ int main(){
                     scanf("%d", &k);
                     switch(k){
                         case 1:
-                            //cadastrarProduto(&listaProdutos);
-                            break;
+                            cadastrarProduto(listaProdutos);
+                        break;
                         case 2:
-                            //listarProdutos(listaProdutos);
-                            break;
+                             listarProdutos(listaProdutos);
+                        break;
                         case 3:
                             {
                             int codigo;
                             printf("Digite o codigo do produto a ser editado: ");
                             scanf("%d", &codigo);
-                            //editarProduto(listaProdutos, codigo);
-                            }
+                            editarProduto(listaProdutos, codigo);
+                        }
                             break;
                         case 4:
-                            //removerProduto(&listaProdutos);
+                            {
+                            int codigo;
+                            printf("Digite o codigo do produto a ser removido: ");
+                            scanf("%d", &codigo);
+                            removerProduto(&listaProdutos, codigo);
+                        }
+                            break;
+                        case 5:
+                            printf("Voltando ao menu anterior...\n");
                             break;
                         default:
+                            printf("Opção inválida! Tente novamente.\n");
                             break;
                     }
                 }
@@ -117,7 +133,8 @@ int main(){
                         printf("Voltando ao menu anterior...\n");
                         break;
                     default:
-                        break;
+                       printf("Opção inválida! Tente novamente.\n");
+                    break;
                 }
                 break;
             }
