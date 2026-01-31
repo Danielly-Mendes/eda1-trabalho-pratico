@@ -4,16 +4,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void cadastrarProduto(Produtos** lista){
+Produtos* CriarListaProduto(){
+
+Produtos* cabeca = malloc (sizeof(Produtos));
+
+if(cabeca != NULL){
+    cabeca->proximo = NULL;
+    cabeca->codigo = -1;
+}
+return cabeca;
+}
+
+Produtos* buscarProduto2(Produtos* lista, int codigo){
+    
+Produtos* atual = lista->proximo;
+
+while(atual != NULL){  
+  
+    if(atual->codigo == codigo){
+      return atual;}
+    
+atual = atual->proximo;
+}
+return NULL;
+}
+
+void cadastrarProduto(Produtos* lista){
 
 Produtos* novo = (Produtos*) malloc (sizeof(Produtos));
 printf("/|----------- NOVO PRODUTO -----------|\\n");
-printf("Codigo: ");
 
+printf("Codigo: ");
 scanf("%d", &novo->codigo);
+
 printf("Nome: ");
 
-if(buscarProduto(*lista, novo->codigo) != NULL)
+if(buscarProduto2(lista, novo->codigo) != NULL)
 {
     printf("Codigo ja cadastrado!\n");
     free(novo);
@@ -21,14 +47,15 @@ if(buscarProduto(*lista, novo->codigo) != NULL)
 }
 
 scanf("%[^\n]", novo->nome);
+
 printf("Preco: ");
 scanf("%f", &novo->preco);
 
 printf("Quantidade: ");
 scanf("%d", &novo->qtde);
 
-novo->proximo = *lista;
-*lista = novo;
+novo->proximo = lista->proximo;
+lista->proximo = novo;
 
 printf("||>> Produto cadastrado com sucesso! <<||\n");
 }
@@ -36,7 +63,7 @@ printf("||>> Produto cadastrado com sucesso! <<||\n");
 
 
 void listarProdutos(Produtos* lista){
-Produtos* atual = lista;
+Produtos* atual = lista->proximo;
 printf("|----------- LISTA DE PRODUTOS -----------|\n");
 if(atual == NULL){
     printf("Nenhum produto cadastrado!\n");
@@ -56,13 +83,17 @@ atual = atual->proximo;
 
 Produtos* buscarProduto(Produtos* lista, int codigo){
     
-Produtos* atual = lista;
+Produtos* atual = lista->proximo;
 
 while(atual != NULL){  
 
     if(atual->codigo == codigo){
-    return atual;
-}
+      printf("||>> Produto encontrado! <<||\n");
+      printf("Codigo: %d\n", atual->codigo);
+      printf("Nome: %s\n", atual->nome);
+      printf("Preco: %.2f\n", atual->preco);     
+      printf("Quantidade: %d\n", atual->qtde);
+      return atual;}
 atual = atual->proximo;
 }
 printf("Produto nao encontrado!\n");
@@ -72,18 +103,20 @@ return NULL;
 
 
 void editarProduto(Produtos* lista, int codigo){
-    while(lista != NULL ){
         
-        if(lista->codigo == codigo){
+    Produtos* editar = buscarProduto2(lista, codigo);
+    if(editar != NULL){
+        
+        if(editar->codigo == codigo){
          
         printf("Novo nome: ");
-        scanf("%[^\n]", lista->nome);
+        scanf("%[^\n]", editar->nome);
         
         printf("Novo preco: ");
-        scanf("%f", &lista->preco);
+        scanf("%f", &editar->preco);
     
         printf("Nova quantidade: ");
-        scanf("%d", &lista->qtde);
+        scanf("%d", &editar->qtde);
         
         printf("||>> Produto editado com sucesso!<<||\n");
 
@@ -97,33 +130,27 @@ printf("Produto nao encontrado!\n");
 
 }
 
-void removerProduto(Produtos** lista,int codigo){
-   Produtos* lixo = buscarProduto(*lista, codigo);
-    if(lixo == NULL){
-        printf("Produto nao encontrado!\n");
-        return;
-    }
-    Produtos* atual = *lista;
+void removerProduto(Produtos* cabeca, int codigo){
+   Produtos* anterior = cabeca;
+   Produtos* atual = cabeca->proximo;
 
-    if(atual == lixo){
-        *lista = (*lista)->proximo;
-        free(lixo);
-        printf("||>> Produto removido com sucesso! <<||\n");
-        return;
-    }
-        while(atual->proximo != lixo){
-            atual = atual->proximo;
-    }
-    
-    atual->proximo = lixo->proximo;
-    free(lixo);
-    printf("||>> Produto removido com sucesso! <<||\n");
-
+   while(atual != NULL && atual->codigo != codigo){
+       anterior = atual;
+       atual = atual->proximo;
+   }
+   if(atual != NULL && atual->codigo == codigo){
+       anterior->proximo = atual->proximo;
+       free(atual);
+       printf("||>> Produto removido com sucesso! <<||\n");
+       return;
+       }
+   
+   printf("Produto nao encontrado!\n");
 }
 
 
-void liberarProdutos(Produtos** lista){
-    Produtos* atual = *lista;
+void liberarProdutos(Produtos* lista){
+    Produtos* atual = lista->proximo;
     Produtos* proximo;
 
     while(atual != NULL){
@@ -132,6 +159,6 @@ void liberarProdutos(Produtos** lista){
         atual = proximo;
     }
     
-    *lista = NULL;
+    lista->proximo = NULL;
 }
 

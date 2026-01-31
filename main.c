@@ -9,10 +9,11 @@
 
 int main(){
     int i = 0;
-    Produtos* listaProdutos = NULL;
+    //Produtos* listaProdutos = NULL;
     //Clientes* listaClientes = NULL;
     
     Clientes * listaClientes = CriarListaCliente();
+    Produtos* listaProdutos = CriarListaProduto();
     
 
     while(i != 4){
@@ -80,7 +81,7 @@ int main(){
                     scanf("%d", &k);
                     switch(k){
                         case 1:
-                            cadastrarProduto(&listaProdutos);
+                            cadastrarProduto(listaProdutos);
                             break;
 
                         case 2:
@@ -94,6 +95,7 @@ int main(){
                             printf("Digite o codigo do produto a ser editado: ");
                             scanf("%d", &codigo);
                             editarProduto(listaProdutos, codigo);
+                            break;
                         }
                             break;
                         case 4:
@@ -101,7 +103,7 @@ int main(){
                             int codigo;
                             printf("Digite o codigo do produto a ser removido: ");
                             scanf("%d", &codigo);
-                            removerProduto(&listaProdutos, codigo);
+                            removerProduto(listaProdutos, codigo);
                         }
                             break;
                         case 5:
