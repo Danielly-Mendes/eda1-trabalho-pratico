@@ -9,13 +9,14 @@
 
 int main(){
     int i = 0;
-    //Produtos* listaProdutos = NULL;
+    Produtos* listaProdutos = NULL;
     //Clientes* listaClientes = NULL;
     
     Clientes * listaClientes = CriarListaCliente();
-    Produtos * listaProdutos = CriarListaProduto(listaClientes);
+    
 
     while(i != 4){
+      
         printf("|>>------------MENU-------------<<|\n");
         printf("| (1) Clientes                    |\n");
         printf("| (2) Produtos                    |\n");
@@ -41,16 +42,18 @@ int main(){
                             cadastrarCliente(listaClientes);
                             break;
                         case 2:
+                        
                             listarClientes(listaClientes);
                             break;
+                        
                         case 3:
                             {
                             int codigo;
                             printf("Digite o codigo do cliente a ser editado: ");
                             scanf("%d", &codigo);
                             //editarCliente(listaClientes, codigo);
+                                                        break;
                             }
-                            break;
                         case 4:
                             //removerCliente(&listaClientes);
                             break;
@@ -77,12 +80,15 @@ int main(){
                     scanf("%d", &k);
                     switch(k){
                         case 1:
-                            cadastrarProduto(listaProdutos);
-                        break;
+                            cadastrarProduto(&listaProdutos);
+                            break;
+
                         case 2:
-                             listarProdutos(listaProdutos);
-                        break;
-                        case 3:
+                        
+                            listarProdutos(listaProdutos);
+                            break;
+                        
+                            case 3:
                             {
                             int codigo;
                             printf("Digite o codigo do produto a ser editado: ");

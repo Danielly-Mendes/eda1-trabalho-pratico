@@ -4,19 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-Produtos* CriarListaProdut(Produtos* lista){
-   
-    Produtos * cabeça = (Produtos*) malloc (sizeof(Produtos));
-   
-    if(cabeça != NULL){
-        cabeça->proximo = NULL;
-    
-    }
-return ;
-}
-
-
 void cadastrarProduto(Produtos** lista){
 
 Produtos* novo = (Produtos*) malloc (sizeof(Produtos));
@@ -26,7 +13,7 @@ printf("Codigo: ");
 scanf("%d", &novo->codigo);
 printf("Nome: ");
 
-if(buscarProduto(lista, novo->codigo) != NULL)
+if(buscarProduto(*lista, novo->codigo) != NULL)
 {
     printf("Codigo ja cadastrado!\n");
     free(novo);
@@ -40,7 +27,7 @@ scanf("%f", &novo->preco);
 printf("Quantidade: ");
 scanf("%d", &novo->qtde);
 
-novo->proximo = lista;
+novo->proximo = *lista;
 *lista = novo;
 
 printf("||>> Produto cadastrado com sucesso! <<||\n");
@@ -121,6 +108,7 @@ void removerProduto(Produtos** lista,int codigo){
     if(atual == lixo){
         *lista = (*lista)->proximo;
         free(lixo);
+        printf("||>> Produto removido com sucesso! <<||\n");
         return;
     }
         while(atual->proximo != lixo){
@@ -129,6 +117,7 @@ void removerProduto(Produtos** lista,int codigo){
     
     atual->proximo = lixo->proximo;
     free(lixo);
+    printf("||>> Produto removido com sucesso! <<||\n");
 
 }
 
