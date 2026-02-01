@@ -31,11 +31,13 @@ int main(){
                 int j = 0;
                 while(j != 5){
                     printf("\n|>>------ Area de Clientes--------<<|\n");
-                    printf("|>> (1) Cadastrar Cliente           |<<\n");
+                    printf("|>> (1) Cadastrar Cliente          |<<\n");
                     printf("|>> (2) Listar Clientes            |<<\n");
                     printf("|>> (3) Editar Cliente             |<<\n");
                     printf("|>> (4) Remover Cliente            |<<\n");
                     printf("|>> (5) Voltar ao Menu Anterior    |<<\n\n");
+                    printf("|>>---------------------------------<<|\n\n");
+
 
                     scanf("%d", &j);
                     switch(j){
@@ -83,6 +85,8 @@ int main(){
                     printf("|>> (3) Editar Produto             |<<\n");
                     printf("|>> (4) Remover Produto            |<<\n");
                     printf("|>> (5) Voltar ao Menu Anterior    |<<\n\n");
+                    printf("|>>-----------------------------<<|\n\n");
+
                     scanf("%d", &k);
                     switch(k){
                         case 1:
@@ -129,6 +133,8 @@ int main(){
                 printf("|>> (2) Listar Produtos de Cliente  |<<\n");
                 printf("|>> (3) Editar Pedido               |<<\n");
                 printf("|>> (4) Voltar ao Menu Anterior     |<<\n\n");
+                printf("|>>-------------------------------<<|\n\n");
+
                 scanf("%d", &l);
                 switch(l){
                     case 1:

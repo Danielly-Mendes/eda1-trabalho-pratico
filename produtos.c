@@ -32,12 +32,11 @@ return NULL;
 void cadastrarProduto(Produtos* lista){
 
 Produtos* novo = (Produtos*) malloc (sizeof(Produtos));
-printf("/|----------- NOVO PRODUTO -----------|\\n");
+printf("/|----------- NOVO PRODUTO -----------|\\ \n");
 
-printf("Codigo: ");
-scanf("%d", &novo->codigo);
+printf("Codigo: \n");
+scanf(" %d", &novo->codigo);
 
-printf("Nome: ");
 
 if(buscarProduto2(lista, novo->codigo) != NULL)
 {
@@ -45,14 +44,15 @@ if(buscarProduto2(lista, novo->codigo) != NULL)
     free(novo);
     return;
 }
+printf("Nome: \n");
 
-scanf("%[^\n]", novo->nome);
+scanf(" %[^\n]", novo->nome);
 
-printf("Preco: ");
-scanf("%f", &novo->preco);
+printf("Preco: \n");
+scanf(" %f", &novo->preco);
 
-printf("Quantidade: ");
-scanf("%d", &novo->qtde);
+printf("Quantidade: \n");
+scanf(" %d", &novo->qtde);
 
 novo->proximo = lista->proximo;
 lista->proximo = novo;
@@ -65,12 +65,13 @@ printf("||>> Produto cadastrado com sucesso! <<||\n");
 void listarProdutos(Produtos* lista){
 Produtos* atual = lista->proximo;
 printf("|----------- LISTA DE PRODUTOS -----------|\n");
+int i = 0;
 if(atual == NULL){
     printf("Nenhum produto cadastrado!\n");
     return;
 }
 while(atual != NULL ){
-
+printf("|----------- Produto %d -----------|\n", ++i);
 printf("Codigo: %d\n", atual->codigo);
 printf("Nome: %s\n", atual->nome);
 printf("Preco: %.2f\n", atual->preco);
@@ -110,13 +111,13 @@ void editarProduto(Produtos* lista, int codigo){
         if(editar->codigo == codigo){
          
         printf("Novo nome: ");
-        scanf("%[^\n]", editar->nome);
+        scanf(" %[^\n]", editar->nome);
         
         printf("Novo preco: ");
-        scanf("%f", &editar->preco);
+        scanf(" %f", &editar->preco);
     
         printf("Nova quantidade: ");
-        scanf("%d", &editar->qtde);
+        scanf(" %d", &editar->qtde);
         
         printf("||>> Produto editado com sucesso!<<||\n");
 
