@@ -21,7 +21,6 @@ typedef struct _Produtos {
     float preco;
     char nome[101];
     struct _Produtos* proximo;
-    int id;
 } Produtos;
 
 typedef struct _ItemCarrinho{
@@ -29,7 +28,6 @@ typedef struct _ItemCarrinho{
     float preco;
     char nome[101];
     struct _ItemCarrinho* proximo;
-    int id ;
 } ItemCarrinho;
 
 

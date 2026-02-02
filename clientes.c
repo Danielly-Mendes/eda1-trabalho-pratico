@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "estruturas.h"
+#include "carrinho.h"
+
+void editarCliente(Clientes *cliente);
 
 Clientes * CriarListaCliente(){
     Clientes * cabeca;
@@ -53,18 +56,24 @@ void cadastrarCliente(Clientes *lista){
     printf("Nome: ");
     scanf(" %[^\n]", cliente->nome);
 
-    printf("\nCPF [XXX.XXX.XXX-XX]: ");
+    printf("\nCPF: ");
     scanf(" %[^\n]", cliente->CPF);
     limparCPF(cliente->CPF);
+
+    if (BuscarCliente(cliente->CPF, lista) != NULL) {
+        printf("Erro: CPF ja cadastrado!\n");
+        free(cliente); // Libera memória alocada à toa
+        return;
+    }
 
     printf("\nData de nascimento [dd/mm/aa]: ");
     scanf(" %[^\n]", cliente->dt_nascimento);
     limparTel(cliente->telefone);
 
-    printf("\nTelefone [(xx) y yyyy-yyyy]: ");
+    printf("\nTelefone: ");
     scanf(" %[^\n]", cliente->telefone);
 
-    cliente->carrinho = NULL;
+    cliente->carrinho = criarCarrinho();
     cliente->proximo = NULL;
 
     Clientes *p = lista;
@@ -77,6 +86,10 @@ void cadastrarCliente(Clientes *lista){
 }
 
 void listarClientes(Clientes *cabeca){
+    if (cabeca == NULL || cabeca->proximo == NULL) {
+        printf("Nenhum cliente cadastrado.\n");
+        return;
+    }
     for(Clientes *p = cabeca->proximo; p != NULL; p = p->proximo){
         printf("- %s\n", p->nome);
     }
@@ -92,7 +105,7 @@ Clientes * BuscarCliente(char busca[15], Clientes *le){
         if (strcmp(busca, p->CPF) == 0) return p;
         p = p->proximo;        
     }   
-
+    printf("\n\nCliente não encontrado.\n\n");
     return NULL;
 }
 
@@ -101,7 +114,7 @@ void editarCliente(Clientes *cliente){
     printf("Nome: ");
     scanf(" %[^\n]", cliente->nome);
 
-    printf("\nCPF [XXX.XXX.XXX-XX]: ");
+    printf("\nCPF: ");
     scanf(" %[^\n]", cliente->CPF);
     limparCPF(cliente->CPF);
 
@@ -109,11 +122,8 @@ void editarCliente(Clientes *cliente){
     scanf(" %[^\n]", cliente->dt_nascimento);
     limparTel(cliente->telefone);
 
-    printf("\nTelefone [(xx) y yyyy-yyyy]: ");
+    printf("\nTelefone: ");
     scanf(" %[^\n]", cliente->telefone);
-
-    cliente->carrinho = NULL;
-    cliente->proximo = NULL;
     
     printf("\nCliente editado com sucesso!\n");
 }
@@ -121,6 +131,8 @@ void editarCliente(Clientes *cliente){
 void removerCliente(Clientes *cabeca, Clientes *cliente) {
     Clientes *anterior = cabeca;
     Clientes *atual = cabeca->proximo;
+
+    // precisa liberar carrinho ANTES de liberar o cliente
 
     while (atual != NULL && atual != cliente) {
         anterior = atual;

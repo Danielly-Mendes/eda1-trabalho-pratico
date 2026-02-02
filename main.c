@@ -1,6 +1,8 @@
 #include "estruturas.h" 
 #include "produtos.h"
 #include "clientes.h"
+#include "carrinho.h"
+#include "carrinho.c"
 //#include "pedidos.c"
 //#include "clientes.c"
 #include <stdio.h>
@@ -138,7 +140,7 @@ int main(){
                 scanf("%d", &l);
                 switch(l){
                     case 1:
-                        //fazerPedido(&listaClientes, listaProdutos);
+                        fazerPedido(listaClientes, listaProdutos);
                         break;
                     case 2:
                         //listarPedidos(listaClientes);
