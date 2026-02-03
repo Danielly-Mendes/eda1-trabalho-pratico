@@ -81,4 +81,39 @@ void listarCarrinho(Clientes * listaClientes, Produtos *listaProdutos){
         total += p->qtde * p->preco;
     }
     printf("Total: %f\n", total);
+<<<<<<< HEAD
+=======
+}
+
+void editarPedido(Clientes * listaClientes, Produtos * listaProdutos){
+    char cpf[15];
+    printf("Digite o cpf: ");
+    scanf(" %[^\n]", cpf);
+
+    Clientes * cliente;
+    cliente = BuscarCliente(cpf, listaClientes);
+    ItemCarrinho * carrinho = cliente->carrinho;
+
+    if (carrinho == NULL || carrinho->proximo == NULL) {
+        printf("O carrinho está vazio.\n");
+        return;
+    }
+
+    int codigoProduto, novaQtde;
+    printf("Digite o codigo do produto que deseja editar: ");
+    scanf(" %d", &codigoProduto);
+
+    ItemCarrinho * p = carrinho->proximo;
+    while (p != NULL){
+        if (p->codigo == codigoProduto){
+            printf("Digite a nova quantidade: ");
+            scanf(" %d", &novaQtde);
+            p->qtde = novaQtde;
+            printf("Quantidade atualizada com sucesso.\n");
+            return;
+        }
+        p = p->proximo;
+    }
+    printf("Produto nao encontrado no carrinho.\n");
+>>>>>>> 8836682 (melhorando o menu, terminando a biblioteca de pedidos, juntando tudo em uma funçao so e criando um makefike)
 }
