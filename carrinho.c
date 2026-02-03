@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "estruturas.h"
 #include "clientes.h"
-#include "clientes.c"
 #include "produtos.h"
-#include "produtos.c"
 
 ItemCarrinho * criarCarrinho(){
     ItemCarrinho * cabeca;
@@ -17,8 +16,9 @@ ItemCarrinho * criarCarrinho(){
 void adicionarProduto(ItemCarrinho *destino, Produtos * produto, int qtde){
     if (destino != NULL && produto != NULL){
         destino->codigo = produto->codigo;
-        // destino->nome = produto->nome;
-        destino->preco = produto->preco * qtde;
+        destino->preco = produto->preco;
+        strcpy(destino->nome, produto->nome);
+        destino->qtde = qtde;
         destino->proximo = NULL;
     }
 }
@@ -32,16 +32,19 @@ void fazerPedido(Clientes *listaClientes, Produtos * listaProdutos){
     Clientes * cliente;
     cliente = BuscarCliente(cpf, listaClientes);
 
-    printf("Quantos produtos diferentes deseja adicionar ao carrinho? ");
+    printf("\nQuantos produtos diferentes deseja adicionar ao carrinho? ");
     scanf(" %d", &i);
 
     for (int j = 0; j < i; j++){
-        printf("Insira o código do produto: ");
+        listarProdutos(listaProdutos);
+
+        printf("\nInsira o código do produto: ");
         scanf(" %d", &codigoProduto);
 
         int qtde;
-        printf("Quantos deste produto deseja adicionar? ");
+        printf("\nQuantos deste produto deseja adicionar? ");
         scanf(" %d", &qtde);
+        
 
         ItemCarrinho *item = (ItemCarrinho *) malloc(sizeof(ItemCarrinho));
         adicionarProduto(item, buscarProduto(listaProdutos, codigoProduto), qtde);
@@ -52,7 +55,30 @@ void fazerPedido(Clientes *listaClientes, Produtos * listaProdutos){
             c = c->proximo;
         }
         c-> proximo = item;
-        printf("\nProduto adicionado ao carrinho.\n");
+        printf("\nProduto adicionado ao carrinho.\n\n");
     }
 
+}
+
+void listarCarrinho(Clientes * listaClientes, Produtos *listaProdutos){
+    char cpf[15];
+    printf("Digite o cpf: ");
+    scanf(" %[^\n]", cpf);
+
+    Clientes * cliente;
+    cliente = BuscarCliente(cpf, listaClientes);
+    ItemCarrinho * carrinho = cliente->carrinho;
+
+    float total = 0;
+
+    if (carrinho == NULL || carrinho->proximo == NULL) {
+        printf("O carrinho está vazio.\n");
+        return;
+    }
+    printf("Codigo  | produto              | quantidade | Preco unitario\n");
+    for(ItemCarrinho *p = carrinho->proximo; p != NULL; p = p->proximo){
+        printf("%d    | %s       | %d | %f \n", p->codigo, p->nome, p->qtde, p->preco * p->qtde);
+        total += p->qtde * p->preco;
+    }
+    printf("Total: %f\n", total);
 }

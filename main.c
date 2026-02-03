@@ -2,9 +2,6 @@
 #include "produtos.h"
 #include "clientes.h"
 #include "carrinho.h"
-#include "carrinho.c"
-//#include "pedidos.c"
-//#include "clientes.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -57,6 +54,8 @@ int main(){
                             printf("Digite o cpf: ");
                             scanf(" %[^\n]", busca);
                             Clientes * temp = BuscarCliente(busca, listaClientes);
+
+                            if(temp == NULL) printf("\n\nCliente nao encontrado.\n\n");
                             editarCliente(temp);
                             break;
                             }
@@ -65,6 +64,8 @@ int main(){
                             printf("Digite o cpf: ");
                             scanf(" %[^\n]", busca);
                             Clientes * temp = BuscarCliente(busca, listaClientes);
+
+                            if(temp == NULL) printf("\n\nCliente nao encontrado.\n\n");
                             removerCliente(listaClientes, temp);
                             break;
                         case 5:
@@ -143,7 +144,7 @@ int main(){
                         fazerPedido(listaClientes, listaProdutos);
                         break;
                     case 2:
-                        //listarPedidos(listaClientes);
+                        listarCarrinho(listaClientes, listaProdutos);
                         break;
                     case 3:
                         {

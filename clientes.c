@@ -4,7 +4,7 @@
 #include "estruturas.h"
 #include "carrinho.h"
 
-void editarCliente(Clientes *cliente);
+Clientes * BuscarCliente(char busca[15], Clientes *le);
 
 Clientes * CriarListaCliente(){
     Clientes * cabeca;
@@ -60,7 +60,7 @@ void cadastrarCliente(Clientes *lista){
     scanf(" %[^\n]", cliente->CPF);
     limparCPF(cliente->CPF);
 
-    if (BuscarCliente(cliente->CPF, lista) != NULL) {
+    if (BuscarCliente(cliente->CPF, lista) !=    NULL) {
         printf("Erro: CPF ja cadastrado!\n");
         free(cliente); // Libera memória alocada à toa
         return;
@@ -105,7 +105,6 @@ Clientes * BuscarCliente(char busca[15], Clientes *le){
         if (strcmp(busca, p->CPF) == 0) return p;
         p = p->proximo;        
     }   
-    printf("\n\nCliente não encontrado.\n\n");
     return NULL;
 }
 
