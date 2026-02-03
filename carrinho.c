@@ -81,8 +81,6 @@ void listarCarrinho(Clientes * listaClientes, Produtos *listaProdutos){
         total += p->qtde * p->preco;
     }
     printf("Total: %f\n", total);
-<<<<<<< HEAD
-=======
 }
 
 void editarPedido(Clientes * listaClientes, Produtos * listaProdutos){
@@ -115,5 +113,4 @@ void editarPedido(Clientes * listaClientes, Produtos * listaProdutos){
         p = p->proximo;
     }
     printf("Produto nao encontrado no carrinho.\n");
->>>>>>> 8836682 (melhorando o menu, terminando a biblioteca de pedidos, juntando tudo em uma funçao so e criando um makefike)
 }

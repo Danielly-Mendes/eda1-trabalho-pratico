@@ -2,10 +2,10 @@ CC := gcc
 CFLAGS := -W -Wall -Wshadow -pedantic
 
 all: BIBLIOTECA
-	$(CC) $(CFLAGS) main.c funcao.o -o bin_main
+	$(CC) $(CFLAGS) main.c funcoes.o -o bin_main
 
 BIBLIOTECA:
-	$(CC) $(CFLAGS) -c funcao.c
+	$(CC) $(CFLAGS) -c funcoes.c
 
 run:
 	./bin_main
