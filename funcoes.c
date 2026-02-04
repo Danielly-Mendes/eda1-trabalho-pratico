@@ -33,7 +33,7 @@ void limparTel(char *tel) {
     limpo[j] = '\0';
     strcpy(tel, limpo);
 }
-
+void liberarCarrinho(ItemCarrinho* carrinho);
 
 // ============================================================
 //                   FUNÇÕES DE CLIENTES
@@ -151,9 +151,21 @@ void removerCliente(Clientes *cabeca, Clientes *cliente) {
     if (atual != NULL) {
         anterior->proximo = atual->proximo;
         printf(VERMELHO "\n  >> Removendo: %s...\n" RESET, atual->nome);
+        liberarCarrinho(atual->carrinho);
         free(atual);
         printf(VERDE "  [v] Sucesso: Cliente removido!\n" RESET);
     }
+}
+
+void liberarClientes(Clientes* lista){
+    Clientes* atual = lista->proximo;
+    while(atual != NULL){
+        Clientes* proximo = atual->proximo;
+        liberarCarrinho(atual->carrinho);
+        free(atual);
+        atual = proximo;
+    }
+    lista->proximo = NULL;
 }
 
 // ============================================================
@@ -446,6 +458,16 @@ void editarPedido(Clientes * listaClientes){
     printf(VERMELHO "\n  [!] Produto nao encontrado no carrinho.\n" RESET);
 }
 
+void liberarCarrinho(ItemCarrinho* carrinho){
+    ItemCarrinho* atual = carrinho->proximo;
+    while(atual != NULL){
+        ItemCarrinho* proximo = atual->proximo;
+        free(atual);
+        atual = proximo;
+    }
+    free(carrinho);
+}
+
 
 
 //                  FUNÇAO DO MENU 
@@ -611,6 +633,10 @@ void menu_trabalho(){
             }
 
             case 4:
+                liberarClientes(listaClientes);
+                liberarProdutos(listaProdutos);
+                free(listaClientes);
+                free(listaProdutos);
                 printf(VERDE "\nSaindo do programa... Ate logo!\n" RESET);
                 break;
             
