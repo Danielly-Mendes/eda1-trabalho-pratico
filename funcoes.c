@@ -619,5 +619,4 @@ void menu_trabalho(){
                 break;
             }
     }
-    return 0;
 }
