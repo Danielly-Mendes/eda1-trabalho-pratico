@@ -39,7 +39,6 @@ void liberarCarrinho(ItemCarrinho* carrinho);
 //                   FUNÇÕES DE CLIENTES
 // ============================================================
 
-// Implementação que estava faltando
 Clientes * BuscarCliente(char busca[15], Clientes *le){
     Clientes *p = le->proximo;
     limparCPF(busca);
@@ -96,27 +95,26 @@ void cadastrarCliente(Clientes *lista){
     printf(VERDE "\n  [v] Sucesso: Cliente cadastrado!\n" RESET);
 }
 
-// Função que estava faltando
 void listarClientes(Clientes *cabeca){
-    printf(CIANO "\n .=======================================================.\n");
-    printf(" ||                 LISTA DE CLIENTES                   ||\n");
-    printf(" ||=====================================================||\n" RESET);
+    printf(CIANO "\n .=====================================================================================.\n");
+    printf(" ||                                LISTA DE CLIENTES                                  ||\n");
+    printf(" ||===================================================================================||\n" RESET);
     
     if (cabeca == NULL || cabeca->proximo == NULL) {
-        printf(CIANO " ||" RESET "             Nenhum cliente cadastrado.              " CIANO "||\n");
-        printf(" '======================================================='\n" RESET);
+        printf(CIANO " ||" RESET "                           Nenhum cliente cadastrado.                            " CIANO "||\n");
+        printf(" '====================================================================================='\n" RESET);
         return;
     }
 
-    printf(CIANO " ||" AMARELO " %-30s | %-16s " CIANO "||\n", "NOME", "CPF");
-    printf(" ||--------------------------------|------------------||\n" RESET);
+    printf(CIANO " ||" AMARELO " %-28s | %-15s | %-12s | %-15s " CIANO "||\n", "NOME", "CPF", "NASC.", "TELEFONE");
+    printf(" ||------------------------------|-----------------|--------------|-----------------||\n" RESET);
 
     for(Clientes *p = cabeca->proximo; p != NULL; p = p->proximo){
-        printf(CIANO " ||" RESET " %-30s | %-16s " CIANO "||\n", p->nome, p->CPF);
+        printf(CIANO " ||" RESET " %-28s | %-15s | %-12s | %-15s " CIANO "||\n", 
+               p->nome, p->CPF, p->dt_nascimento, p->telefone);
     }
-    printf(CIANO " '======================================================='\n" RESET);
+    printf(CIANO " '====================================================================================='\n" RESET);
 }
-
 void editarCliente(Clientes *cliente){
     printf(CIANO "\n .=======================================.\n");
     printf(" ||           EDITAR CLIENTE            ||\n");
@@ -470,8 +468,9 @@ void liberarCarrinho(ItemCarrinho* carrinho){
 }
 
 
-
+// ============================================================
 //                  FUNÇAO DO MENU 
+// ============================================================
 
 void menu_trabalho(){
    Clientes * listaClientes = CriarListaCliente();
@@ -538,6 +537,7 @@ void menu_trabalho(){
                             break;
                         }
                         case 5:
+                        
                             break;
                         default:
                             printf(VERMELHO "\n[!] Opcao invalida! Tente novamente.\n" RESET);
