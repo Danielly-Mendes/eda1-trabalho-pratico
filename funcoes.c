@@ -21,7 +21,7 @@ void limparCPF(char *cpf) {
     strcpy(cpf, limpo);
 }
 
-void limparTel(char *tel) {
+void limparTel(char *tel) { 
     int i, j = 0;
     char limpo[15];
     for (i = 0; tel[i] != '\0'; i++) {
@@ -372,6 +372,7 @@ void fazerPedido(Clientes *listaClientes, Produtos * listaProdutos){
 
             ItemCarrinho *item = malloc(sizeof(ItemCarrinho));
             adicionarProduto(item, prodEncontrado, qtde);
+            prodEncontrado->qtde = prodEncontrado->qtde - qtde;
 
             ItemCarrinho * c = cliente->carrinho;
             while (c->proximo != NULL) c = c->proximo;

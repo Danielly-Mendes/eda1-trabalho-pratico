@@ -20,7 +20,6 @@ typedef struct _Clientes {
     char email[101];
     struct _Clientes* proximo;
     ItemCarrinho* carrinho;
-    int id;
 
 } Clientes;
 
